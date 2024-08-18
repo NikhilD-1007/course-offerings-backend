@@ -13,4 +13,8 @@ public interface ICourseDeliveryService {
 
 	ResponseEntity<List<Course>> getCourseListByYearAndSem(int year, int sem);
 
+	ResponseEntity<Course_Delivery> getInstanceDetailsByYearAndSemAndCourseId(int year, int sem, long courseId);
+
+	void deleteCourseInstanceByYear_Sem_courseId(int year, int sem, long courseId);
+
 }

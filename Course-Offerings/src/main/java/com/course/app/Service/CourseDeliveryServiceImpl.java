@@ -28,9 +28,9 @@ public class CourseDeliveryServiceImpl implements ICourseDeliveryService{
 	private CourseRepository courseRepo;
 
 	@Override
-	public ResponseEntity<?> addCourseInstance(Long couseId, Course_Delivery coDeObj) {
+	public ResponseEntity<?> addCourseInstance(Long courseId, Course_Delivery coDeObj) {
 		// TODO Auto-generated method stub
-		Course courseObj = courseRepo.findById(couseId).orElseThrow(()-> new ResourceNotFoundException("Couse Details not found by Id "+couseId));
+		Course courseObj = courseRepo.findById(courseId).orElseThrow(()-> new ResourceNotFoundException("Couse Details not found by Id "+courseId));
 		
 		coDeObj.setCourseObj(courseObj);
 		
@@ -51,5 +51,27 @@ public class CourseDeliveryServiceImpl implements ICourseDeliveryService{
 		}
 		
 		return new ResponseEntity<>(courseList, HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<Course_Delivery> getInstanceDetailsByYearAndSemAndCourseId(int year, int sem, long courseId) {
+		// TODO Auto-generated method stub
+		Course courseDetail = courseRepo.findById(courseId).orElseThrow(()-> new ResourceNotFoundException("Couse not found by Id "+courseId));
+		
+		Course_Delivery resCourseInstance = courseDeliRepo.findByYearOfDeliveryAndSemesterOfDeliveryAndCourseObj(year,sem,courseId).get();
+		
+		if(resCourseInstance !=null)
+		{
+			return new ResponseEntity<>(resCourseInstance,HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+	}
+
+	@Override
+	public void deleteCourseInstanceByYear_Sem_courseId(int year, int sem, long courseId) {
+		// TODO Auto-generated method stub
+		courseDeliRepo.deleteByYearOfDeliveryAndSemesterOfDeliveryAndCourseObj(year,sem,courseId);
+		
 	}
 }
