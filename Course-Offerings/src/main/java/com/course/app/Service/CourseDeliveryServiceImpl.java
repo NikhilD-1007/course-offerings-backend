@@ -40,26 +40,27 @@ public class CourseDeliveryServiceImpl implements ICourseDeliveryService{
 	}
 
 	@Override
-	public ResponseEntity<List<Course>> getCourseListByYearAndSem(int year, int sem) {
+	public ResponseEntity<List<Course_Delivery>> getCourseListByYearAndSem(int year, int sem) {
 		// TODO Auto-generated method stub
 		List<Course_Delivery> list = courseDeliRepo.findByYearOfDeliveryAndSemesterOfDelivery(year,sem);
 		
-		List<Course> courseList = new ArrayList<Course>();
-		for(Course_Delivery i : list)
-		{
-			courseList.add(i.getCourseObj());
-		}
+//		List<Course> courseList = new ArrayList<Course>();
+//		for(Course_Delivery i : list)
+//		{
+//			courseList.add(i.getCourseObj());
+//		}
 		
-		return new ResponseEntity<>(courseList, HttpStatus.OK);
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity<Course_Delivery> getInstanceDetailsByYearAndSemAndCourseId(int year, int sem, long courseId) {
 		// TODO Auto-generated method stub
+		
 		Course courseDetail = courseRepo.findById(courseId).orElseThrow(()-> new ResourceNotFoundException("Couse not found by Id "+courseId));
-		
+//		System.out.println(courseDetail);
 		Course_Delivery resCourseInstance = courseDeliRepo.findByYearOfDeliveryAndSemesterOfDeliveryAndCourseObj(year,sem,courseId).get();
-		
+//		System.out.println(resCourseInstance);
 		if(resCourseInstance !=null)
 		{
 			return new ResponseEntity<>(resCourseInstance,HttpStatus.OK);
@@ -71,7 +72,16 @@ public class CourseDeliveryServiceImpl implements ICourseDeliveryService{
 	@Override
 	public void deleteCourseInstanceByYear_Sem_courseId(int year, int sem, long courseId) {
 		// TODO Auto-generated method stub
+		Course courseDetail = courseRepo.findById(courseId).orElseThrow(()-> new ResourceNotFoundException("Couse not found by Id "+courseId));	
+		
 		courseDeliRepo.deleteByYearOfDeliveryAndSemesterOfDeliveryAndCourseObj(year,sem,courseId);
 		
+	}
+
+	@Override
+	public List<Course_Delivery> getAllInstanceList() {
+		// TODO Auto-generated method stub
+		
+		return courseDeliRepo.findAll();
 	}
 }

@@ -11,10 +11,12 @@ public interface ICourseDeliveryService {
 
 	ResponseEntity<?> addCourseInstance(Long couseId, Course_Delivery coDeObj);
 
-	ResponseEntity<List<Course>> getCourseListByYearAndSem(int year, int sem);
+	ResponseEntity<List<Course_Delivery>> getCourseListByYearAndSem(int year, int sem);
 
 	ResponseEntity<Course_Delivery> getInstanceDetailsByYearAndSemAndCourseId(int year, int sem, long courseId);
 
 	void deleteCourseInstanceByYear_Sem_courseId(int year, int sem, long courseId);
+
+	List<Course_Delivery> getAllInstanceList();
 
 }

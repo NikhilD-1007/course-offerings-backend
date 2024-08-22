@@ -44,7 +44,9 @@ public class CourseServiceImpl implements ICourseService{
 	@Override
 	public void deleteCourseById(Long couseId) {
 		// TODO Auto-generated method stub
-		courseRepo.deleteById(couseId);
+		Course courseDet = courseRepo.findById(couseId).orElseThrow(()-> new ResourceNotFoundException("Couse Details not found by Id "+couseId));
+		
+		courseRepo.delete(courseDet);
 
 	}
 }

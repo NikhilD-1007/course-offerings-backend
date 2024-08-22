@@ -15,6 +15,7 @@ public interface CourseDeliveyRepository extends JpaRepository<Course_Delivery, 
 
 	List<Course_Delivery> findByYearOfDeliveryAndSemesterOfDelivery(int year, int sem);
 
+
 	@Query("SELECT i FROM Course_Delivery i WHERE i.yearOfDelivery = ?1 AND i.semesterOfDelivery = ?2 AND i.courseObj.courseId = ?3")
 	Optional<Course_Delivery> findByYearOfDeliveryAndSemesterOfDeliveryAndCourseObj(int year, int sem, long courseId);
 
